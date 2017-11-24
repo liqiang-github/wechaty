@@ -44,6 +44,7 @@ import {
 import Profile        from './profile'
 import Puppet         from './puppet'
 import PuppetWeb      from './puppet-web/'
+import PuppetElectron from './puppet-electron'
 import Room           from './room'
 import Misc           from './misc'
 
@@ -187,7 +188,6 @@ export class Wechaty extends EventEmitter implements Sayable {
    */
   public async init(): Promise<void> {
     log.warn('Wechaty', 'init() DEPRECATED and will be removed after Jun 2018. Use start() instead.')
-    await this.start()
   }
 
   /**
@@ -199,6 +199,7 @@ export class Wechaty extends EventEmitter implements Sayable {
    * // do other stuff with bot here
    */
   public async start(): Promise<void> {
+
     log.info('Wechaty', 'v%s starting...' , this.version())
     log.verbose('Wechaty', 'puppet: %s'       , this.options.puppet)
     log.verbose('Wechaty', 'profile: %s'      , this.options.profile)
@@ -409,7 +410,11 @@ export class Wechaty extends EventEmitter implements Sayable {
           profile:  this.profile,
         })
         break
-
+      case 'electron':
+        puppet = new PuppetElectron({
+            profile: this.profile,
+        })
+        break
       default:
         throw new Error('Puppet unsupport(yet?): ' + this.options.puppet)
     }

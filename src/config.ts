@@ -86,6 +86,7 @@ if (/verbose|silly/i.test(log.level())) {
 }
 
 export type PuppetName = 'web'
+                        | 'electron'
                         | 'android'
                         | 'ios'
 
